@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    private Animator characterAnimator;
+    // Create key codes for controls
     [SerializeField]
     private KeyCode jump;
     [SerializeField]
@@ -15,12 +15,11 @@ public class InputController : MonoBehaviour
     private KeyCode left;
     [SerializeField]
     private KeyCode right;
-    public PlayerPawn playerPawn;
+    private PlayerPawn playerPawn;
     // Start is called before the first frame update
     void Start()
     {
-        // Gain access to the animation controller
-        characterAnimator = GetComponent<Animator>();
+        // Access the Player Pawn script
         playerPawn = GetComponent<PlayerPawn>();
     }
 
@@ -36,11 +35,6 @@ public class InputController : MonoBehaviour
         if (Input.GetKey(left) || Input.GetKey(right))
         {
             playerPawn.Strafe();
-        }
-        if (Input.GetKeyUp(forwards) && Input.GetKeyUp( backwards) && Input.GetKeyUp(left) && Input.GetKeyUp(right))
-        {
-            // Enter the Idle animation when no keys are being pressed
-            playerPawn.Idle();
         }
 
         playerPawn.RotateTowards(GetMousePosition());

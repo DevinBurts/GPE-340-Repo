@@ -7,7 +7,6 @@ public class PlayerPawn : Pawn
     private Animator characterAnimator;
     public float moveSpeed;
     public float rotateSpeed;
-    public float jumpForce;
     private Quaternion targetRotation;
     private Vector3 moveDirection;
     // Start is called before the first frame update
@@ -23,23 +22,17 @@ public class PlayerPawn : Pawn
     {
         
     }
-    public void Idle()
-    {
-        // Enter the idle animation
-        characterAnimator.SetFloat("Forward", 0);
-        characterAnimator.SetFloat("Right", 0);
-    }
 
     public void Walk()
     {
         // normalize movement vector
         moveDirection.Normalize();
 
-        //Change the movedirection to be based on world space
+        //Change the move direction to be based on world space
         moveDirection = transform.InverseTransformDirection(moveDirection);
         moveDirection.z = Input.GetAxis("Vertical");
         // Walk forwards and backwards
-        characterAnimator.SetFloat("Forward", moveDirection.z);
+        characterAnimator.SetFloat("Forward", moveDirection.z * moveSpeed);
 
     }
 
@@ -71,7 +64,7 @@ public class PlayerPawn : Pawn
         moveDirection = transform.InverseTransformDirection(moveDirection);
         moveDirection.x = Input.GetAxis("Horizontal");
         // Move to the left and right
-        characterAnimator.SetFloat("Right", moveDirection.x);
+        characterAnimator.SetFloat("Right", moveDirection.x * moveSpeed);
     }
     public void RotateTowards(Vector3 targetPoint)
     {
@@ -82,7 +75,5 @@ public class PlayerPawn : Pawn
 
         // rotate towards a target per frame
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-        //transform.position.RotateTowards(targetPoint);
     }
 }
