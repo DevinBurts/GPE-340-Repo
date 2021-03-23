@@ -5,16 +5,15 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     // Create key codes for controls
-    [SerializeField]
-    private KeyCode jump;
-    [SerializeField]
-    private KeyCode forwards;
-    [SerializeField]
-    private KeyCode backwards;
-    [SerializeField]
-    private KeyCode left;
-    [SerializeField]
-    private KeyCode right;
+    [Header("Inputs")]
+    public KeyCode jump;
+    public KeyCode forwards;
+    public KeyCode backwards;
+    public KeyCode left;
+    public KeyCode right;
+    public KeyCode attack;
+    public KeyCode dropWeapon;
+
     private PlayerPawn playerPawn;
     // Start is called before the first frame update
     void Start()
@@ -26,8 +25,11 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Have the player rotate towards the mouse
+        playerPawn.RotateTowards(GetMousePosition());
+
         // play the running animation that corresponds with the player's input
-        
+
         if (Input.GetKey(forwards) || Input.GetKey(backwards))
         {
             playerPawn.Walk();
@@ -36,15 +38,27 @@ public class InputController : MonoBehaviour
         {
             playerPawn.Strafe();
         }
-
-        playerPawn.RotateTowards(GetMousePosition());
-
-        // play the jump animation when the jump key is pressed
-        if (Input.GetKeyDown(jump))
+        if (Input.GetKeyUp(forwards) && Input.GetKeyUp(backwards))
         {
-            playerPawn.Jump();
-
+            playerPawn.Idle();
         }
+        if (Input.GetKeyDown(attack))
+        {
+            // Access the player's current weapon and begin attacking
+            playerPawn.weapon.AttackStart();
+        }
+        if (Input.GetKeyUp(attack))
+        {
+            // Access the player's current weapon and stop attacking
+            playerPawn.weapon.AttackEnd();
+        }
+        if (Input.GetKey(dropWeapon))
+        {
+            // Unequip the current weapon
+            playerPawn.UnequipWeapon();
+        }
+
+
     }
 
     public Vector3 GetMousePosition()
