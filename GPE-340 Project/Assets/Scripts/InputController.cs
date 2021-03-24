@@ -38,14 +38,22 @@ public class InputController : MonoBehaviour
         {
             playerPawn.Strafe();
         }
-        if (Input.GetKeyUp(forwards) && Input.GetKeyUp(backwards))
+        // Check if the gun has a fullAuto setting
+        if((playerPawn.gun != null) && (playerPawn.gun.tag != "RocketLauncher") && (playerPawn.gun.GetComponent<Rifle>().fullAuto == true))
         {
-            playerPawn.Idle();
+            if (Input.GetKey(attack))
+            {
+                // Access the player's current weapon and begin attacking
+                playerPawn.weapon.AttackStart();
+            }
         }
-        if (Input.GetKeyDown(attack))
+        else
         {
-            // Access the player's current weapon and begin attacking
-            playerPawn.weapon.AttackStart();
+            if (Input.GetKeyDown(attack))
+            {
+                // Access the player's current weapon and begin attacking
+                playerPawn.weapon.AttackStart();
+            }
         }
         if (Input.GetKeyUp(attack))
         {

@@ -7,10 +7,10 @@ public class RespawnCharacter : MonoBehaviour
 {
     [SerializeField]
     private GameObject character;
-    public float respawnTimer;
-    public float resetTime;
     public Text healthText;
+    [SerializeField]
     private bool isAlive;
+    [SerializeField]
     private Animator characterAnimator;
     // Start is called before the first frame update
     void Start()
@@ -21,19 +21,13 @@ public class RespawnCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        respawnTimer -= Time.deltaTime;
-        if (respawnTimer <= 0)
+        if (isAlive == false)
         {
-            if (isAlive == false)
-            {
-                Respawn();
-            }
+            Respawn();
         }
     }
     public void Die(GameObject character)
     {
-        // Gain access to the animation controller
-        characterAnimator = character.GetComponent<Animator>();
         // Play the death animation, remove the character, and respawn them
         if (character.tag == "Player")
         {
@@ -49,9 +43,7 @@ public class RespawnCharacter : MonoBehaviour
     }
     public void Respawn()
     {
-        // Reset the timer
-        respawnTimer = resetTime;
-
+        isAlive = true;
         // Respawn the character and make the respawner the parent
         character = Instantiate(character, transform.position, Quaternion.identity);
         character.transform.parent = this.transform;
@@ -71,6 +63,5 @@ public class RespawnCharacter : MonoBehaviour
             // Ensure the animator knows the character is alive 
             character.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", true);
         }
-        isAlive = true;
     }
 }

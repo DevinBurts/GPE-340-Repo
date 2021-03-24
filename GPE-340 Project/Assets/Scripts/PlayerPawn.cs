@@ -28,12 +28,17 @@ public class PlayerPawn : Pawn
     {
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
         healthText.text = "Current health " + currentHealth + " / " + maxHealth;
-    }
 
-    public void Idle()
-    {
-        characterAnimator.SetFloat("Forward", 0f);
-        characterAnimator.SetFloat("Right", 0f);
+        // Ensure the player's current health cannot exceed the maximum
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        if (currentHealth <= 0)
+        {
+            // access the empty gameobject to respawn the killed character
+            respawner.GetComponent<RespawnCharacter>().Die(this.gameObject);
+        }
     }
 
     public void Walk()

@@ -6,6 +6,7 @@ public class EquipWeapon : MonoBehaviour
 {
     private GameObject player;
     public Weapon weapon;
+    public GameObject weaponToSpawn;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +24,12 @@ public class EquipWeapon : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             player = col.gameObject;
-            EquipGun(gameObject);
+            EquipGun(weaponToSpawn);
         }
     }
     public void EquipGun(GameObject weaponType)
     {
-        // create a weapon to give to the player
+        // Create a weapon 
         GameObject gun = Instantiate(weaponType, player.GetComponent<PlayerPawn>().attachPoint.position, Quaternion.identity) as GameObject;
         if (gun.tag == "Rifle")
         {
@@ -39,9 +40,11 @@ public class EquipWeapon : MonoBehaviour
             weapon = gun.GetComponent<RocketLauncher>();
 
         }
-        gun.transform.SetParent(player.GetComponent<PlayerPawn>().attachPoint);
+        // Make the gun a child of the owner
+        gun.transform.SetParent(player.GetComponent<PlayerPawn>().attachPoint, false);
         gun.transform.localPosition = weaponType.transform.localPosition;
         gun.transform.localRotation = weaponType.transform.localRotation;
+        // Let Player Pawn know the player is using a weapon
         player.GetComponent<PlayerPawn>().weaponEquipped = true;
         player.GetComponent<PlayerPawn>().gun = gun;
         player.GetComponent<PlayerPawn>().weapon = weapon;

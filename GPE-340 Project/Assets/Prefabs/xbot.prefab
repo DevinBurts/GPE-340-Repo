@@ -978,7 +978,7 @@ MonoBehaviour:
   characterAnimator: {fileID: 0}
   respawner: {fileID: 0}
   moveSpeed: 2
-  rotateSpeed: 50
+  rotateSpeed: 30
   healthText: {fileID: 0}
 --- !u!1 &3160859248978816387
 GameObject:
@@ -1183,12 +1183,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3342406629254814644}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.294, z: 0.4}
+  m_LocalPosition: {x: 0.27, y: 1.294, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3019703561317851720}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3695477306694407162
 GameObject:
   m_ObjectHideFlags: 0

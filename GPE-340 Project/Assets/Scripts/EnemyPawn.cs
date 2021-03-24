@@ -17,6 +17,10 @@ public class EnemyPawn : Pawn
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHealth <= 0)
+        {
+            // access the empty gameobject to respawn the killed character
+            respawner.GetComponent<RespawnCharacter>().Die(this.gameObject);
+        }
     }
 }

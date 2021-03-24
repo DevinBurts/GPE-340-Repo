@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     public float projectileSpeed;
     public int damage;
     public float lifeSpan;
+    public float timeTillNextShot;
+    public float timeReset;
 
     [Header("Unity Events")]
     public UnityEvent OnAttackStart;
@@ -25,6 +27,7 @@ public class Weapon : MonoBehaviour
     public Transform RHandPoint;
     public Transform LHandPoint;
 
+    public bool fullAuto;
     // Start is called before the first frame update
     public virtual void Start()
     {

@@ -122,9 +122,8 @@ GameObject:
   - component: {fileID: 8441076436646939256}
   - component: {fileID: 6135453999132082632}
   - component: {fileID: 4019915648034876659}
-  - component: {fileID: -7904814473769179733}
   m_Layer: 0
-  m_Name: Assault_Rifle_M4_with_scope
+  m_Name: Rifle
   m_TagString: Rifle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,25 +167,17 @@ MonoBehaviour:
   projectileSpeed: 3
   damage: 2
   lifeSpan: 3
+  timeTillNextShot: 0
+  timeReset: 1
   OnAttackStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3042490651408529265}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnAttackEnd:
     m_PersistentCalls:
       m_Calls: []
   RHandPoint: {fileID: 2252561656278847814}
   LHandPoint: {fileID: 6595507681678681614}
+  fullAuto: 0
   rifle: {fileID: 4564483810366538203}
 --- !u!114 &8441076436646939256
 MonoBehaviour:
@@ -229,19 +220,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 1}
   m_Center: {x: -0.5, y: 0.2, z: 0}
---- !u!114 &-7904814473769179733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3042490651408529265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62f16b4b832d8242bf9ea25da72d416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
 --- !u!1 &4178136442923931214
 GameObject:
   m_ObjectHideFlags: 0

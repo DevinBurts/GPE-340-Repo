@@ -8,7 +8,7 @@ public class Rifle : Weapon
     // Start is called before the first frame update
     public override void Start()
     {
-        shoot = GetComponent<Shoot>();
+        
     }
 
     // Update is called once per frame
@@ -19,6 +19,16 @@ public class Rifle : Weapon
 
     public override void AttackStart()
     {
+        shoot = GetComponent<Shoot>();
+        if (fullAuto == true)
+        {
+            // Give the bullets a small delay to avoid having them spawn ontop of each other
+            shoot.timeReset = 0.2f;
+        }
+        else
+        {
+            shoot.timeReset = timeReset;
+        }
         // Instantiate a bullet
         shoot.Fire(projectile, firePoint, damage, projectileSpeed, lifeSpan);
         base.AttackStart();

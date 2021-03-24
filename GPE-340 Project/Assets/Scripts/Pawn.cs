@@ -25,10 +25,7 @@ public class Pawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
+        
     }
 
     public enum WeaponAnimationType
@@ -53,10 +50,5 @@ public class Pawn : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            // access the empty gameobject to respawn the killed character
-            respawner.GetComponent<RespawnCharacter>().Die(this.gameObject);
-        }
     }
 }
