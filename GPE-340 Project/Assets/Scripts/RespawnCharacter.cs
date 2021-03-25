@@ -10,8 +10,6 @@ public class RespawnCharacter : MonoBehaviour
     public Text healthText;
     [SerializeField]
     private bool isAlive;
-    [SerializeField]
-    private Animator characterAnimator;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,20 +36,21 @@ public class RespawnCharacter : MonoBehaviour
             character.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", false);
         }
         // Delete the character after it dies
-        Destroy(character, resetTime);
+        Destroy(character);
         isAlive = false;
     }
     public void Respawn()
     {
         isAlive = true;
         // Respawn the character and make the respawner the parent
-        character = Instantiate(character, transform.position, Quaternion.identity);
-        character.transform.parent = this.transform;
+        GameObject newCharacter = Instantiate(character, transform.position, Quaternion.identity);
+        newCharacter.transform.parent = this.transform;
+        character = newCharacter;
         if (character.tag == "Player")
         {
             character.GetComponent<PlayerPawn>().respawner = this.gameObject;
             // Assign the character animator to the player
-            character.GetComponent<PlayerPawn>().characterAnimator = characterAnimator;
+            character.GetComponent<PlayerPawn>().characterAnimator = character.GetComponent<Animator>();
             // Ensure the animator knows the character is alive 
             character.GetComponent<PlayerPawn>().characterAnimator.SetBool("Alive", true);
         }
@@ -59,7 +58,7 @@ public class RespawnCharacter : MonoBehaviour
         {
             character.GetComponent<EnemyPawn>().respawner = this.gameObject;
             // Assign the character animator to the player
-            character.GetComponent<EnemyPawn>().characterAnimator = characterAnimator;
+            character.GetComponent<EnemyPawn>().characterAnimator = character.GetComponent<Animator>();
             // Ensure the animator knows the character is alive 
             character.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", true);
         }
