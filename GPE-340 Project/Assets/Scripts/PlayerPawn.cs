@@ -6,28 +6,26 @@ using UnityEngine.UI;
 public class PlayerPawn : Pawn
 {
     [Header("Data")]
-    public float moveSpeed;
-    public float rotateSpeed;
     private Quaternion targetRotation;
     private Vector3 moveDirection;
-    public Text healthText;
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
         // Gain access to the animation controller
         characterAnimator = GetComponent<Animator>();
         currentHealth = maxHealth;
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         characterAnimator.SetBool("Alive", true);
         respawner = transform.parent.gameObject;
-        healthText = respawner.GetComponent<RespawnCharacter>().healthText;
+        healthbarText = respawner.GetComponent<RespawnCharacter>().healthText;
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
-        healthText.text = "Current health " + currentHealth + " / " + maxHealth;
+        healthbarText.text = "Current health " + currentHealth + " / " + maxHealth;
 
         // Ensure the player's current health cannot exceed the maximum
         if (currentHealth > maxHealth)
@@ -36,9 +34,11 @@ public class PlayerPawn : Pawn
         }
         if (currentHealth <= 0)
         {
-            // access the empty gameobject to respawn the killed character
-            respawner.GetComponent<RespawnCharacter>().Die(this.gameObject);
+            gmCaller.lives -= 1;
+            // remove the player after it dies
+            Die();
         }
+        base.Update();
     }
 
     public void Walk()

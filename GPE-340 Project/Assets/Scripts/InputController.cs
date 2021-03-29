@@ -13,23 +13,26 @@ public class InputController : MonoBehaviour
     public KeyCode right;
     public KeyCode attack;
     public KeyCode dropWeapon;
-
+    public Vector3 moveDirection;
     private PlayerPawn playerPawn;
+    private Pawn pawn;
     // Start is called before the first frame update
     void Start()
     {
         // Access the Player Pawn script
         playerPawn = GetComponent<PlayerPawn>();
+        pawn = playerPawn;
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
     }
 
     // Update is called once per frame
     void Update()
     {
+        moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
         // Have the player rotate towards the mouse
         playerPawn.RotateTowards(GetMousePosition());
 
         // play the running animation that corresponds with the player's input
-
         if (Input.GetKey(forwards) || Input.GetKey(backwards))
         {
             playerPawn.Walk();
@@ -38,6 +41,8 @@ public class InputController : MonoBehaviour
         {
             playerPawn.Strafe();
         }
+
+
         // Check if the gun has a fullAuto setting
         if((playerPawn.gun != null) && (playerPawn.gun.tag != "RocketLauncher") && (playerPawn.gun.GetComponent<Rifle>().fullAuto == true))
         {

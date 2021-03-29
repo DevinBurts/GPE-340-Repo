@@ -957,6 +957,7 @@ MonoBehaviour:
   right: 100
   attack: 9
   dropWeapon: 8
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &3342406629230328462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,14 +972,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   gun: {fileID: 0}
+  moveSpeed: 2
+  rotateSpeed: 30
   maxHealth: 20
   currentHealth: 0
   weaponEquipped: 0
   attachPoint: {fileID: 3342406629254814647}
+  timer: 4
   characterAnimator: {fileID: 0}
   respawner: {fileID: 0}
-  moveSpeed: 2
-  rotateSpeed: 30
   healthText: {fileID: 0}
 --- !u!1 &3160859248978816387
 GameObject:
@@ -1102,7 +1104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3342406627863081848}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3019703561317851720}

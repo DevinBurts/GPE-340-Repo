@@ -6,6 +6,8 @@ public class Shoot : MonoBehaviour
 {
     public float timeTillNextShot;
     public float timeReset;
+    public AudioClip audio;
+    public float vol;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class Shoot : MonoBehaviour
     }
     public void Fire(GameObject projectile, Transform firePoint, int damage, float projectileSpeed, float lifeSpan)
     {
+        // play the designated audioclip
+        AudioSource.PlayClipAtPoint(audio, transform.position, vol);
         if (timeTillNextShot <= 0)
         {
             // Create the projectile at the designated point

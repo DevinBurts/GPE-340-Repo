@@ -35,7 +35,6 @@ public class Rifle : Weapon
     }
     public override void AttackEnd()
     {
-
         base.AttackEnd();
     }
 }

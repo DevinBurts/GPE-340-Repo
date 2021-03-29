@@ -7,12 +7,17 @@ public class RespawnCharacter : MonoBehaviour
 {
     [SerializeField]
     private GameObject character;
-    public Text healthText;
     [SerializeField]
-    private bool isAlive;
+    private GameObject charToTrack;
+    public Text healthText;
+    public bool isAlive;
+    public GameObject target;
+    public GameObject GameManager;
+    public GameManager gmCaller;
     // Start is called before the first frame update
     void Start()
     {
+        gmCaller = GameManager.GetComponent<GameManager>();
         isAlive = true;
     }
 
@@ -23,44 +28,37 @@ public class RespawnCharacter : MonoBehaviour
         {
             Respawn();
         }
-    }
-    public void Die(GameObject character)
-    {
-        // Play the death animation, remove the character, and respawn them
-        if (character.tag == "Player")
+        if (charToTrack == null)
         {
-            character.GetComponent<PlayerPawn>().characterAnimator.SetBool("Alive", false);
+            isAlive = false;
         }
-        else if (character.tag == "Enemy")
-        {
-            character.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", false);
-        }
-        // Delete the character after it dies
-        Destroy(character);
-        isAlive = false;
     }
+    
     public void Respawn()
     {
         isAlive = true;
         // Respawn the character and make the respawner the parent
         GameObject newCharacter = Instantiate(character, transform.position, Quaternion.identity);
         newCharacter.transform.parent = this.transform;
-        character = newCharacter;
-        if (character.tag == "Player")
+        charToTrack = newCharacter;
+        if (charToTrack.tag == "Player")
         {
-            character.GetComponent<PlayerPawn>().respawner = this.gameObject;
+            charToTrack.GetComponent<PlayerPawn>().respawner = this.gameObject;
+            charToTrack.GetComponent<PlayerPawn>().gmCaller = gmCaller;
             // Assign the character animator to the player
-            character.GetComponent<PlayerPawn>().characterAnimator = character.GetComponent<Animator>();
+            charToTrack.GetComponent<PlayerPawn>().characterAnimator = charToTrack.GetComponent<Animator>();
             // Ensure the animator knows the character is alive 
-            character.GetComponent<PlayerPawn>().characterAnimator.SetBool("Alive", true);
+            charToTrack.GetComponent<PlayerPawn>().characterAnimator.SetBool("Alive", true);
         }
         else
         {
-            character.GetComponent<EnemyPawn>().respawner = this.gameObject;
+            charToTrack.GetComponent<EnemyPawn>().respawner = this.gameObject;
+            charToTrack.GetComponent<EnemyPawn>().gmCaller = gmCaller;
             // Assign the character animator to the player
-            character.GetComponent<EnemyPawn>().characterAnimator = character.GetComponent<Animator>();
+            charToTrack.GetComponent<EnemyPawn>().characterAnimator = charToTrack.GetComponent<Animator>();
             // Ensure the animator knows the character is alive 
-            character.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", true);
+            charToTrack.GetComponent<EnemyPawn>().characterAnimator.SetBool("Alive", true);
+            charToTrack.GetComponent<AIController>().target = target;
         }
     }
 }
